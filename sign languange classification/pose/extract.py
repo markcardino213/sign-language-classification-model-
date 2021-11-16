@@ -18,6 +18,7 @@ cap = cv2.VideoCapture(0)
 
 with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic:
     with mp_hands.Hands(max_num_hands=2, min_detection_confidence = 0.5, min_tracking_confidence = 0.5) as hands:
+        
         while cap.isOpened():
             ret, frame = cap.read()
             image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -36,10 +37,10 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
 
             try:
                 pose = holistic_results.pose_landmarks.landmark
-                pose_row = list(np.array([[landmark.x, landmark.y, landmark.z,] for landmark in pose]).flatten())if  holistic_results.pose_landmarks else np.zeros(33*3)
+                pose_row = list(np.array([[landmark.x, landmark.y, landmark.z, landmark.visibility] for landmark in pose]).flatten()if  holistic_results.pose_landmarks else np.zeros(33*3))
 
                 Hand = hand.landmark
-                hand_row = list(np.array([[landmark.x, landmark.y, landmark.z, ] for landmark in Hand]).flatten()) if hand.landmark else np.zeros(21*3)
+                hand_row = list(np.array([[landmark.x, landmark.y, landmark.z, landmark.visibility] for landmark in Hand]).flatten() if hand.landmark else np.zeros(21*3))
 
 
                 row = pose_row+hand_row
@@ -54,7 +55,7 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
 
             cv2.imshow('Raw Webcam Feed', image)
             #cv2.waitKey(100)
-            if cv2.waitKey(1000) & 0xFF == ord('q'):
+            if cv2.waitKey(75) & 0xFF == ord('q'):
                 break
 
 cap.release()

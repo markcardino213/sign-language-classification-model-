@@ -35,18 +35,11 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
 
             try:
                 pose = holistic_results.pose_landmarks.landmark
-                pose_row = list(np.array([[landmark.x, landmark.y, landmark.z,] for landmark in pose]).flatten())if  holistic_results.pose_landmarks else np.zeros(33*3)
+                pose_row = list(np.array([[landmark.x, landmark.y, landmark.z, landmark.visibility] for landmark in pose]).flatten() if  holistic_results.pose_landmarks else np.zeros(33*3))
 
                 Hand = hand.landmark
-                hand_row = list(np.array([[landmark.x, landmark.y, landmark.z, ] for landmark in Hand]).flatten()) if hand.landmark else np.zeros(21*3)
+                hand_row = list(np.array([[landmark.x, landmark.y, landmark.z,  landmark.visibility] for landmark in Hand]).flatten() if hand.landmark else np.zeros(21*3))
 
-
-                row = pose_row+hand_row
-                row.insert(0, class_name)
-                
-                with open('coords.csv', mode='a', newline='') as f:
-                    csv_writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-                    csv_writer.writerow(row) 
 
             except:
                 pass
@@ -62,7 +55,7 @@ num_coords = len(holistic_results.pose_landmarks.landmark)+len(hand.landmark)
 
 landmarks = ['class']
 for val in range(1, num_coords+1):
-    landmarks += ['x{}'.format(val), 'y{}'.format(val), 'z{}'.format(val)]
+    landmarks += ['x{}'.format(val), 'y{}'.format(val), 'z{}'.format(val), 'v{}'.format(val)]
 
 
 with open('coords.csv', mode='w', newline='') as f:
