@@ -13,7 +13,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score
 import pickle 
 
-df = pd.read_csv('coords.csv')
+df = pd.read_csv('coordinates.csv')
 
 X = df.drop('class', axis=1) # features
 y = df['class'] # target value
@@ -59,5 +59,5 @@ print(micro, macro, weighted)
 
 
 
-with open('body_language.pkl', 'wb') as f:
+with open('body_language2.pkl', 'wb') as f:
     pickle.dump(classifier, f)
