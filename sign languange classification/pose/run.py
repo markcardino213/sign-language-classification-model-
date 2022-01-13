@@ -12,9 +12,10 @@ mp_holistic = mp.solutions.holistic
 mp_hands = mp.solutions.hands 
 mp_drawing = mp.solutions.drawing_utils 
 
-with open('body_language.pkl', 'rb') as f:
+with open('pose.pkl', 'rb') as f:
     model = pickle.load(f)
 
+#cap = cv2.VideoCapture("C:/Users/markc/OneDrive/Desktop/desktop/dataset/page2/page2/thank-you-2.mp4")
 cap = cv2.VideoCapture(0)
 
 with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic:
@@ -49,6 +50,10 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
                 sign_language_class = model.predict(X)[0]
                 sign_language_prob = model.predict_proba(X)[0]
                 print(sign_language_class)
+
+                cv2.putText(image, 'CLASS', (95,12), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1, cv2.LINE_AA)
+                cv2.putText(image, sign_language_class.split(' ')[0], (90,40), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
+                
             except:
                 pass
 

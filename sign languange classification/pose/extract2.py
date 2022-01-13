@@ -10,9 +10,9 @@ mp_holistic = mp.solutions.holistic
 mp_hands = mp.solutions.hands 
 mp_drawing = mp.solutions.drawing_utils 
 
-class_name = "a!"
+class_name = "hello"
 
-path = glob.glob("C:/Users/markc/OneDrive/Desktop/thesis/asl alphabet/asl alphabet/archive/a/*.jpg")
+path = glob.glob("C:/Users/markc/OneDrive/Desktop/pose/collectedimages/hello/*.jpg")
 
 
 for file in path:
@@ -43,7 +43,7 @@ for file in path:
                 row = pose_row+hand_row
                 row.insert(0, class_name)
                     
-                with open('coords.csv', mode='a', newline='') as f:
+                with open('pose_coords.csv', mode='a', newline='') as f:
                     csv_writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
                     csv_writer.writerow(row) 
 
