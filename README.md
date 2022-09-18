@@ -6,7 +6,7 @@ pip install mediapipe opencv-python pandas numpy scikit-learn
 # Collect dataset: 
   •go dataset folder and run Collect image.ipynb
 # Extracting keypoints:
-  •go to python folder\n
+  •go to python folder
   •create a .csv file every time you will extract a new class of dataset by running create_csv_v2.1.py
   •run create_csv_v2.1.py after every created .csv
 # Training
